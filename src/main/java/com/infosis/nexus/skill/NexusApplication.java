@@ -1,4 +1,4 @@
-package com.infosis.nexus;
+package com.infosis.nexus.skill;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.infosis.nexus;
+package com.infosis.nexus.skill;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
