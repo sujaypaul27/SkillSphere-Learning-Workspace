@@ -47,7 +47,7 @@ public class Skill {
     }
 
     protected Skill() {
-        // required by JPA, protected to discourage misuse
+        // required by JPA, protected to discourage misuse.
     }
 
     public Skill(Long employeeId, String skillName, SkillCategory category,
