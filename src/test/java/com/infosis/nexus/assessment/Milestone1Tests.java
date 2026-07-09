@@ -1,5 +1,8 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.assessment;
 
+import com.infosis.nexus.Employee.Employee;
+import com.infosis.nexus.Employee.EmployeeRepository;
+import com.infosis.nexus.Employee.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

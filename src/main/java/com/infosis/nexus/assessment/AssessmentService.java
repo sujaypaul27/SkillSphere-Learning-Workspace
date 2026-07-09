@@ -1,5 +1,6 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.assessment;
 
+import com.infosis.nexus.Employee.EmployeeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

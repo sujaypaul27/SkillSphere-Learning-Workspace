@@ -1,4 +1,4 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.assessment;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
