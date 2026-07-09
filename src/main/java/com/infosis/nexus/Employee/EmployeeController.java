@@ -1,4 +1,4 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.Employee;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +18,7 @@ public class EmployeeController {
     {
         return service.getAll();
     }
-    @GetMapping("/test")
-    public String test() {
-        return "Controller Working";
-    }
+   
     @GetMapping("/{id}")
     public Employee getById(@PathVariable Long id)
     {
