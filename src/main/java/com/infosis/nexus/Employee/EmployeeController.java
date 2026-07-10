@@ -1,4 +1,4 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.Employee;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

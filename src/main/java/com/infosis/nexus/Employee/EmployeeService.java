@@ -1,4 +1,4 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.Employee;
 
 import org.springframework.stereotype.Service;
 
