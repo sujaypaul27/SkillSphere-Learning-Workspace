@@ -18,6 +18,8 @@ public class Certification {
 
     @NotBlank(message = "Provider is required")
     private String provider;
+    @Column(name ="employee_id" , nullable = false)
+    private Long employeeid;
 
     private LocalDate issueDate;
 
@@ -28,11 +30,12 @@ public class Certification {
     public Certification() {
     }
 
-    public Certification(Long id, String certificationName, String provider,
+    public Certification(Long id, String certificationName, String provider, Long employeeid,
                          LocalDate issueDate, LocalDate expiryDate, String status) {
         this.id = id;
         this.certificationName = certificationName;
         this.provider = provider;
+        this.employeeid = employeeid;
         this.issueDate = issueDate;
         this.expiryDate = expiryDate;
         this.status = status;
@@ -84,5 +87,13 @@ public class Certification {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getEmployeeid() {
+        return employeeid;
+    }
+
+    public void setEmployeeid(Long employeeid) {
+        this.employeeid = employeeid;
     }
 }
