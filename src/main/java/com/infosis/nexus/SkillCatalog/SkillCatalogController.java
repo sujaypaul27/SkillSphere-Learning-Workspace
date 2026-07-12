@@ -1,4 +1,4 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.SkillCatalog;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -6,31 +6,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills")
-public class SkillController {
-    private final SkillService service;
+@RequestMapping("/api/skillcatalog")
+public class SkillCatalogController {
+    private final SkillCatalogService service;
 
-    public SkillController(SkillService service) {
+    public SkillCatalogController(SkillCatalogService service) {
         this.service = service;
     }
 
     @GetMapping
-    public List<Skill> getAll() {
+    public List<SkillCatalog> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Skill getById(@PathVariable Long id) {
+    public SkillCatalog getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @PostMapping
-    public Skill create(@Valid @RequestBody Skill skill) {
+    public SkillCatalog create(@Valid @RequestBody SkillCatalog skill) {
         return service.create(skill);
     }
 
     @PutMapping("/{id}")
-    public Skill update(@PathVariable Long id, @Valid @RequestBody Skill skill) {
+    public SkillCatalog update(@PathVariable Long id, @Valid @RequestBody SkillCatalog skill) {
         return service.update(id, skill);
     }
 

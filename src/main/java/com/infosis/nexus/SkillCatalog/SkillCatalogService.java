@@ -1,40 +1,40 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.SkillCatalog;
 
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SkillService {
+public class SkillCatalogService {
 
-    private final SkillRepository repository;
+    private final SkillCatalogRepository repository;
 
-    public SkillService(SkillRepository repository) {
+    public SkillCatalogService(SkillCatalogRepository repository) {
         this.repository = repository;
     }
 
-    public List<Skill> getAll() {
+    public List<SkillCatalog> getAll() {
         return repository.findAll();
     }
 
-    public Skill getById(Long id) {
+    public SkillCatalog getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Skill not found with id: " + id));
     }
 
-    public Skill create(Skill skill) {
+    public SkillCatalog create(SkillCatalog skill) {
         return repository.save(skill);
     }
 
-    public Skill update(Long id, Skill skill) {
-        Skill existing = getById(id);
+    public SkillCatalog update(Long id, SkillCatalog skill) {
+        SkillCatalog existing = getById(id);
         existing.setName(skill.getName());
         existing.setCategory(skill.getCategory());
         return repository.save(existing);
     }
 
     public void delete(Long id) {
-        Skill existing = getById(id);
+        SkillCatalog existing = getById(id);
         repository.delete(existing);
     }
 }

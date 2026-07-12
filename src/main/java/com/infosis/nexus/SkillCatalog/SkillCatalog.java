@@ -1,11 +1,11 @@
-package com.infosis.nexus.skill;
+package com.infosis.nexus.SkillCatalog;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "skills")
-public class Skill {
+public class SkillCatalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,12 +14,12 @@ public class Skill {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private SkillCategory category;
+    private SkillCatalogCategory category;
 
-    public Skill() {
+    public SkillCatalog() {
     }
 
-    public Skill(Long id, String name, SkillCategory category) {
+    public SkillCatalog(Long id, String name, SkillCatalogCategory category) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -41,11 +41,11 @@ public class Skill {
         this.name = name;
     }
 
-    public SkillCategory getCategory() {
+    public SkillCatalogCategory getCategory() {
         return category;
     }
 
-    public void setCategory(SkillCategory category) {
+    public void setCategory(SkillCatalogCategory category) {
         this.category = category;
     }
 }
