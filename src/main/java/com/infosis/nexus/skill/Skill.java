@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "skill")
+@Table(name = "skill_data")
 public class Skill {
 
     @Id
@@ -18,7 +18,7 @@ public class Skill {
     private String skillName;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 50)
+    @Column(name = "skill_category " , nullable = false, length = 50)
     private SkillCategory category;
 
     @Column(name = "proficiency_level", nullable = false)
