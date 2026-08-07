@@ -3,7 +3,7 @@ package com.skillsphere.certification.service;
 import com.skillsphere.certification.dto.RenewalNotificationDTO;
 import com.skillsphere.certification.entity.Certification;
 import com.skillsphere.certification.entity.RenewalNotification;
-import com.skillsphere.certification.repository.CertificationRepository;
+import com.skillsphere.certification.repository.RenewalCertificationRepository;
 import com.skillsphere.certification.repository.RenewalNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class RenewalNotificationService {
     
     @Autowired
-    private CertificationRepository certificationRepository;
+    private RenewalCertificationRepository certificationRepository;
     
     @Autowired
     private RenewalNotificationRepository renewalNotificationRepository;

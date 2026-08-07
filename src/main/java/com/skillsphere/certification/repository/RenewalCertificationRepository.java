@@ -6,27 +6,28 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CertificationRepository extends JpaRepository<Certification, UUID> {
+public interface RenewalCertificationRepository extends JpaRepository<Certification, UUID> {
     
-    @Query(value = "SELECT * FROM certifications WHERE expiry_date BETWEEN NOW() AND NOW() + INTERVAL 30 DAY AND status = 'VALID'", 
+    @Query(value = "SELECT * FROM renewal_certifications WHERE expiry_date BETWEEN NOW() AND NOW() + INTERVAL 30 DAY AND status = 'VALID'", 
            nativeQuery = true)
     List<Certification> findExpiringCertifications();
     
     List<Certification> findByEmployeeId(UUID employeeId);
     
-    @Query("SELECT c FROM Certification c WHERE c.expiryDate < NOW() AND c.status != 'RENEWED'")
+    @Query(value = "SELECT * FROM renewal_certifications WHERE expiry_date < NOW() AND status != 'RENEWED'", 
+           nativeQuery = true)
     List<Certification> findExpiredCertifications();
     
-    @Query(value = "SELECT * FROM certifications WHERE expiry_date BETWEEN NOW() AND NOW() + INTERVAL :days DAY AND status = 'VALID'", 
+    @Query(value = "SELECT * FROM renewal_certifications WHERE expiry_date BETWEEN NOW() AND NOW() + INTERVAL :days DAY AND status = 'VALID'", 
            nativeQuery = true)
     List<Certification> findCertificationsExpiringWithinDays(@Param("days") Integer days);
     
-    @Query("SELECT COUNT(c) FROM Certification c WHERE c.status = 'VALID'")
+    @Query(value = "SELECT COUNT(*) FROM renewal_certifications WHERE status = 'VALID'", 
+           nativeQuery = true)
     Long countActiveCertifications();
     
     Certification findByCertNameAndEmployeeId(String certName, UUID employeeId);
