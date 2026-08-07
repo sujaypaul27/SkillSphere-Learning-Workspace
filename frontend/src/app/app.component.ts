@@ -101,6 +101,7 @@ export class AppComponent implements OnInit {
 
   isLoaded = false;
   useMockData = false;
+  private baseUrl = 'http://localhost:8080'; // Change this to your deployed backend URL (e.g., 'https://backend.onrender.com')
 
   constructor(private http: HttpClient) {}
 
@@ -111,7 +112,7 @@ export class AppComponent implements OnInit {
 
   fetchData(): void {
     // Attempt to load live data from backend APIs
-    this.http.get<SummaryReport>('http://localhost:8080/api/certifications/reports/summary').subscribe({
+    this.http.get<SummaryReport>(`${this.baseUrl}/api/certifications/reports/summary`).subscribe({
       next: (summaryData) => {
         this.summary = summaryData;
         this.fetchExpiringCertifications();
@@ -125,7 +126,7 @@ export class AppComponent implements OnInit {
   }
 
   fetchExpiringCertifications(): void {
-    this.http.get<ExpiringCert[]>('http://localhost:8080/api/certifications/reports/expiring').subscribe({
+    this.http.get<ExpiringCert[]>(`${this.baseUrl}/api/certifications/reports/expiring`).subscribe({
       next: (expiringList) => {
         if (expiringList && expiringList.length > 0) {
           this.expiringCerts = expiringList;
