@@ -27,6 +27,15 @@ interface ProviderStat {
   color: string;
 }
 
+interface AuditLog {
+  id?: number;
+  action: string;
+  entityName: string;
+  entityId: number;
+  details: string;
+  timestamp: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -99,6 +108,34 @@ export class AppComponent implements OnInit {
     { name: 'Cloud Native Computing Foundation', count: 60, percentage: 25, color: '#a855f7' }
   ];
 
+  // Audit Logs activities list
+  auditLogs: AuditLog[] = [
+    {
+      id: 1,
+      action: 'CREATE',
+      entityName: 'Certification',
+      entityId: 12,
+      details: 'Created certification: AWS Certified Cloud Practitioner for Employee ID: 2',
+      timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString() // 15 minutes ago
+    },
+    {
+      id: 2,
+      action: 'UPDATE',
+      entityName: 'Certification',
+      entityId: 8,
+      details: 'Updated status of certification: Java SE 17 Developer to VALID',
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() // 2 hours ago
+    },
+    {
+      id: 3,
+      action: 'DELETE',
+      entityName: 'Certification',
+      entityId: 4,
+      details: 'Deleted expired certification: Salesforce Admin for Employee ID: 10',
+      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString() // 1 day ago
+    }
+  ];
+
   isLoaded = false;
   useMockData = false;
   private baseUrl = 'http://localhost:8080'; // Change this to your deployed backend URL (e.g., 'https://backend.onrender.com')
@@ -116,6 +153,7 @@ export class AppComponent implements OnInit {
       next: (summaryData) => {
         this.summary = summaryData;
         this.fetchExpiringCertifications();
+        this.fetchAuditLogs();
       },
       error: (err) => {
         console.warn('Backend reporting API not available, falling back to spec-defined mock values.', err);
@@ -139,6 +177,24 @@ export class AppComponent implements OnInit {
         console.warn('Could not load expiring certifications list from backend.', err);
         this.useMockData = true;
         this.isLoaded = true;
+      }
+    });
+  }
+
+  fetchAuditLogs(): void {
+    this.http.get<AuditLog[]>(`${this.baseUrl}/api/audit-logs`).subscribe({
+      next: (logs) => {
+        if (logs && logs.length > 0) {
+          // Show newest logs first
+          this.auditLogs = logs.sort((a, b) => {
+            const dateA = a.id || 0;
+            const dateB = b.id || 0;
+            return dateB - dateA;
+          });
+        }
+      },
+      error: (err) => {
+        console.warn('Could not load audit logs from backend.', err);
       }
     });
   }

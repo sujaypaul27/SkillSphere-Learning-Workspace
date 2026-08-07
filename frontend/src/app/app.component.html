@@ -195,6 +195,27 @@
           <span>System Monitoring Active</span>
         </div>
       </div>
+
+      <!-- System Audit Trail Card -->
+      <div class="sidebar-card">
+        <h3 class="sidebar-card-title">System Audit Trail</h3>
+        <p class="sidebar-card-desc">Recent activity log for certification state updates.</p>
+        
+        <div class="audit-timeline">
+          <div *ngFor="let log of auditLogs" class="timeline-item">
+            <div class="timeline-marker" [ngClass]="log.action.toLowerCase()"></div>
+            <div class="timeline-details-wrapper">
+              <div class="timeline-action-badge" [ngClass]="log.action.toLowerCase()">
+                {{ log.action }}
+              </div>
+              <p class="timeline-details-text">{{ log.details }}</p>
+              <span class="timeline-time-text">
+                {{ log.timestamp | date:'shortTime' }} &bull; {{ log.timestamp | date:'mediumDate' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </aside>
   </div>
 </div>
