@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /skillsphere
+
+spring:
+  application:
+    name: certification-notification-service
+  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  h2:
+    console:
+      enabled: true
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+  
+  task:
+    scheduling:
+      pool:
+        size: 5
