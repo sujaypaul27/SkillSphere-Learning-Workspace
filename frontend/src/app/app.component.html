@@ -183,16 +183,38 @@
         </div>
       </div>
 
-      <!-- Quick Tips Card -->
+      <!-- Pending Renewal Notifications Card -->
       <div class="sidebar-card highlight-card">
         <div class="highlight-glow"></div>
-        <h3 class="sidebar-card-title">Compliance Alert</h3>
-        <p class="compliance-alert-text">
-          Automatic notifications are dispatched to employees exactly <strong>30 days</strong> and <strong>15 days</strong> prior to certification expiration dates.
-        </p>
-        <div class="compliance-footer">
-          <span class="pulse-icon"></span>
-          <span>System Monitoring Active</span>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; gap: 0.5rem;">
+          <div>
+            <h3 class="sidebar-card-title">Pending Renewals</h3>
+            <p class="sidebar-card-desc" style="margin: 0; font-size: 0.75rem;">Email delivery tasks queue.</p>
+          </div>
+          <button class="trigger-btn" (click)="triggerGenerate()" title="Trigger manual check for expiring certs">
+            Scan Expiries
+          </button>
+        </div>
+        
+        <div class="notification-list">
+          <div *ngFor="let notif of pendingNotifications" class="notification-item">
+            <div class="notif-details">
+              <div class="notif-cert-name" [title]="notif.certName">{{ notif.certName }}</div>
+              <div class="notif-meta">
+                Employee: {{ notif.employeeId }} &bull; <span style="color: #fbbf24; font-weight: 700;">{{ notif.daysUntilExpiry }} days left</span>
+              </div>
+            </div>
+            <button class="send-btn" (click)="sendNotification(notif.notificationId)" title="Send email notification">
+              Send
+            </button>
+          </div>
+          
+          <div *ngIf="pendingNotifications.length === 0" class="empty-notif-state">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>All alert tasks dispatched.</span>
+          </div>
         </div>
       </div>
 

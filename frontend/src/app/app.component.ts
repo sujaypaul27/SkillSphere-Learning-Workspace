@@ -36,6 +36,19 @@ interface AuditLog {
   timestamp: string;
 }
 
+interface RenewalNotification {
+  notificationId: string;
+  certId: string;
+  employeeId: string;
+  certName: string;
+  expiryDate: string;
+  daysUntilExpiry: number;
+  status: string;
+  notificationChannel: string;
+  retryCount: number;
+  sentAt?: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -136,6 +149,32 @@ export class AppComponent implements OnInit {
     }
   ];
 
+  // Teammate's pending notifications list
+  pendingNotifications: RenewalNotification[] = [
+    {
+      notificationId: 'a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d',
+      certId: '1',
+      employeeId: '101',
+      certName: 'AWS Certified Solutions Architect - Associate',
+      expiryDate: '2026-08-15',
+      daysUntilExpiry: 16,
+      status: 'PENDING',
+      notificationChannel: 'EMAIL',
+      retryCount: 0
+    },
+    {
+      notificationId: 'f6e5d4c3-b2a1-0f9e-8d7c-6b5a4m3l2k1j',
+      certId: '3',
+      employeeId: '103',
+      certName: 'Certified Kubernetes Administrator (CKA)',
+      expiryDate: '2026-08-10',
+      daysUntilExpiry: 11,
+      status: 'PENDING',
+      notificationChannel: 'EMAIL',
+      retryCount: 0
+    }
+  ];
+
   isLoaded = false;
   useMockData = false;
   private baseUrl = 'http://localhost:8080'; // Change this to your deployed backend URL (e.g., 'https://backend.onrender.com')
@@ -154,6 +193,7 @@ export class AppComponent implements OnInit {
         this.summary = summaryData;
         this.fetchExpiringCertifications();
         this.fetchAuditLogs();
+        this.fetchPendingNotifications();
       },
       error: (err) => {
         console.warn('Backend reporting API not available, falling back to spec-defined mock values.', err);
@@ -185,16 +225,57 @@ export class AppComponent implements OnInit {
     this.http.get<AuditLog[]>(`${this.baseUrl}/api/audit-logs`).subscribe({
       next: (logs) => {
         if (logs && logs.length > 0) {
-          // Show newest logs first
           this.auditLogs = logs.sort((a, b) => {
-            const dateA = a.id || 0;
-            const dateB = b.id || 0;
-            return dateB - dateA;
+            const idA = a.id || 0;
+            const idB = b.id || 0;
+            return idB - idA;
           });
         }
       },
       error: (err) => {
         console.warn('Could not load audit logs from backend.', err);
+      }
+    });
+  }
+
+  fetchPendingNotifications(): void {
+    this.http.get<RenewalNotification[]>(`${this.baseUrl}/api/v1/certifications/renewals/pending`).subscribe({
+      next: (notifications) => {
+        if (notifications && notifications.length > 0) {
+          this.pendingNotifications = notifications;
+        }
+      },
+      error: (err) => {
+        console.warn('Could not load pending renewal notifications from backend.', err);
+      }
+    });
+  }
+
+  sendNotification(id: string): void {
+    this.http.post(`${this.baseUrl}/api/v1/certifications/renewals/${id}/send`, {}).subscribe({
+      next: () => {
+        // Remove or update locally
+        this.pendingNotifications = this.pendingNotifications.filter(n => n.notificationId !== id);
+        alert('Notification email successfully sent!');
+      },
+      error: (err) => {
+        console.error('Error triggering notification delivery.', err);
+        // Local simulation fallback
+        this.pendingNotifications = this.pendingNotifications.filter(n => n.notificationId !== id);
+        alert('Simulation: Notification marked as SENT.');
+      }
+    });
+  }
+
+  triggerGenerate(): void {
+    this.http.post(`${this.baseUrl}/api/v1/certifications/renewals/trigger/generate`, {}, { responseType: 'text' }).subscribe({
+      next: (msg) => {
+        alert(msg);
+        this.fetchPendingNotifications();
+      },
+      error: (err) => {
+        console.error('Error triggering generation.', err);
+        alert('Simulation: Checked database and generated pending alerts.');
       }
     });
   }
