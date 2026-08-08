@@ -776,4 +776,103 @@ body {
   padding: 1rem 0;
 }
 
+/* Compliance Health Row Grid */
+.compliance-health-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.health-item {
+  background: rgba(13, 20, 38, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.health-item:hover {
+  transform: translateY(-2px);
+  background: rgba(13, 20, 38, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.health-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+
+.health-value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.status-dot-glow {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+
+/* Color Coding for Status Cards */
+.health-item.compliant {
+  border-left: 4px solid #10b981;
+}
+.health-item.compliant .health-value {
+  color: #34d399;
+}
+.compliant-glow {
+  background-color: #34d399;
+  box-shadow: 0 0 12px #34d399;
+}
+
+.health-item.non-compliant {
+  border-left: 4px solid #ef4444;
+}
+.health-item.non-compliant .health-value {
+  color: #f87171;
+}
+.non-compliant-glow {
+  background-color: #f87171;
+  box-shadow: 0 0 12px #f87171;
+}
+
+.health-item.pending {
+  border-left: 4px solid #f59e0b;
+}
+.health-item.pending .health-value {
+  color: #fbbf24;
+}
+.pending-glow {
+  background-color: #fbbf24;
+  box-shadow: 0 0 12px #fbbf24;
+}
+
+.health-item.expired {
+  border-left: 4px solid #64748b;
+}
+.health-item.expired .health-value {
+  color: #94a3b8;
+}
+.expired-glow {
+  background-color: #94a3b8;
+  box-shadow: 0 0 10px #64748b;
+}
+
+
 

@@ -175,6 +175,13 @@ export class AppComponent implements OnInit {
     }
   ];
 
+  complianceSummary = {
+    compliant: 28,
+    nonCompliant: 5,
+    pending: 3,
+    expired: 4
+  };
+
   isLoaded = false;
   useMockData = false;
   private baseUrl = 'http://localhost:8080'; // Change this to your deployed backend URL (e.g., 'https://backend.onrender.com')
@@ -194,6 +201,7 @@ export class AppComponent implements OnInit {
         this.fetchExpiringCertifications();
         this.fetchAuditLogs();
         this.fetchPendingNotifications();
+        this.fetchComplianceSummary();
       },
       error: (err) => {
         console.warn('Backend reporting API not available, falling back to spec-defined mock values.', err);
@@ -247,6 +255,27 @@ export class AppComponent implements OnInit {
       },
       error: (err) => {
         console.warn('Could not load pending renewal notifications from backend.', err);
+      }
+    });
+  }
+
+  fetchComplianceSummary(): void {
+    this.http.get<any[]>(`${this.baseUrl}/api/compliance`).subscribe({
+      next: (records) => {
+        if (records && records.length > 0) {
+          const counts = { compliant: 0, nonCompliant: 0, pending: 0, expired: 0 };
+          records.forEach(r => {
+            const status = r.status || '';
+            if (status === 'COMPLIANT') counts.compliant++;
+            else if (status === 'NON_COMPLIANT') counts.nonCompliant++;
+            else if (status === 'PENDING') counts.pending++;
+            else if (status === 'EXPIRED') counts.expired++;
+          });
+          this.complianceSummary = counts;
+        }
+      },
+      error: (err) => {
+        console.warn('Could not load compliance summary, using mock defaults.', err);
       }
     });
   }

@@ -65,6 +65,38 @@
     </div>
   </section>
 
+  <!-- Compliance Health Monitor Grid -->
+  <section class="compliance-health-row">
+    <div class="health-item compliant">
+      <div>
+        <div class="health-label">Compliant</div>
+        <div class="health-value">{{ complianceSummary.compliant }}</div>
+      </div>
+      <div class="status-dot-glow compliant-glow"></div>
+    </div>
+    <div class="health-item non-compliant">
+      <div>
+        <div class="health-label">Non-Compliant</div>
+        <div class="health-value">{{ complianceSummary.nonCompliant }}</div>
+      </div>
+      <div class="status-dot-glow non-compliant-glow"></div>
+    </div>
+    <div class="health-item pending">
+      <div>
+        <div class="health-label">Pending Review</div>
+        <div class="health-value">{{ complianceSummary.pending }}</div>
+      </div>
+      <div class="status-dot-glow pending-glow"></div>
+    </div>
+    <div class="health-item expired">
+      <div>
+        <div class="health-label">Expired</div>
+        <div class="health-value">{{ complianceSummary.expired }}</div>
+      </div>
+      <div class="status-dot-glow expired-glow"></div>
+    </div>
+  </section>
+
   <!-- Two-Column Main Content Layout -->
   <div class="dashboard-columns">
     <!-- Left Column: Certifications Table -->
